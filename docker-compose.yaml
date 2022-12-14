@@ -5,7 +5,12 @@ services:
     #build: .
     image: alicey/raspi-raspi-remote-control-server:latest
     container_name: raspi-remote-control-server
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined
     volumes:
-        - "./app/:/opt/app"
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - "./app/:/opt/app"
     ports:
       - 32121:80
