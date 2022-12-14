@@ -65,7 +65,8 @@ def get_params(req):
     func = str(req.get('func'))
     return hw, func
 
-def get_id(hw, func):
+def get_id(req):
+    hw, func = get_params(req)
     return f"{hw}:{func}"
 
 def record(id):
