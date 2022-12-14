@@ -25,7 +25,8 @@ def top():
 @app.route("/api/send")
 def send_ir():
     try:
-        playback(get_id(request.args))
+        pl = playback(get_id(request.args))
+        print("log:", pl)
         return jsonify({'status':'done'}), 200
     except Exception as e:
         print(e)
@@ -40,23 +41,23 @@ def rec_ir():
         print(e)
         return jsonify({'status':'error'}), 500
 
-@app.route("/send-test/")
-def send_test():
-    try:
-        playback("air:on")
-        return jsonify({'status':'done'}), 200
-    except Exception as e:
-        print(e)
-        return jsonify({'status':'error'}), 500
+# @app.route("/send-test/")
+# def send_test():
+#     try:
+#         playback("air:on")
+#         return jsonify({'status':'done'}), 200
+#     except Exception as e:
+#         print(e)
+#         return jsonify({'status':'error'}), 500
 
-@app.route("/rec-test/")
-def rec_test():
-    try:
-        record("air:on")
-        return jsonify({'status':'done'}), 200
-    except Exception as e:
-        print(e)
-        return jsonify({'status':'error'}), 500
+# @app.route("/rec-test/")
+# def rec_test():
+#     try:
+#         record("air:on")
+#         return jsonify({'status':'done'}), 200
+#     except Exception as e:
+#         print(e)
+#         return jsonify({'status':'error'}), 500
 
 # @app.route("/temp/", methods=["GET","POST"])
 # def temp():
