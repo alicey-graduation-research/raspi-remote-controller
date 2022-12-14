@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, request
 from irrp import IRRP
+import subprocess
 import sys
 
+subprocess.call("pigpiod")
 ir = IRRP(file="test", post=130, no_confirm=True)
 app = Flask("simple-iot-server")
 

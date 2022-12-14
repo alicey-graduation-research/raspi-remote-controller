@@ -14,7 +14,7 @@ RUN apt-get install -y python3-pigpio \
     && apt-get -y clean \
     && rm -rf /var/lib/apt/lists/*
 # gccとか消したほうが良い希ガス
-RUN /usr/local/bin/pigpiod
+# RUN /usr/local/bin/pigpiod
 
 #app 
 WORKDIR /opt/app
