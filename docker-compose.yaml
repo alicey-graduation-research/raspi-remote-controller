@@ -9,6 +9,7 @@ services:
       - SYS_ADMIN
     security_opt:
       - seccomp:unconfined
+    privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - "./app/:/opt/app"
