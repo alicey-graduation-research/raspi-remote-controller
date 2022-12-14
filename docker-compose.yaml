@@ -5,6 +5,9 @@ services:
     #build: .
     image: alicey/raspi-raspi-remote-control-server:latest
     container_name: raspi-remote-control-server
+    environment:
+      - REC_PORT=22
+      - SEND_PORT=23
     cap_add:
       - SYS_ADMIN
     security_opt:

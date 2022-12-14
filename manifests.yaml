@@ -27,7 +27,7 @@ spec:
           securityContext:
             privileged: true
           env:
-            - name: REC-PIN
+            - name: REC_PIN
               value: "22"
-            - name: SEND-PIN
+            - name: SEND_PIN
               value: "23"

@@ -1,7 +1,13 @@
 from flask import Flask, jsonify, request
+from dotenv import load_dotenv
 from irrp import IRRP
 import subprocess
 import sys
+import os
+
+load_dotenv()
+SEND_PIN = int(os.getenv('SEND_PIN'))
+REC_PIN = int(os.getenv('REC_PIN'))
 
 subprocess.call("pigpiod")
 ir = IRRP(file="test", post=130, no_confirm=True)
@@ -14,7 +20,7 @@ def top():
 @app.route("/send-test/")
 def send_test():
     try:
-        ir.Playback(GPIO=23, ID="air:on")
+        playback("air:on")
         return jsonify({'status':'done'}), 200
     except Exception as e:
         print(e)
@@ -23,7 +29,7 @@ def send_test():
 @app.route("/rec-test/")
 def rec_test():
     try:
-        ir.Record(GPIO=22, ID="air:on")
+        record("air:on")
         return jsonify({'status':'done'}), 200
     except Exception as e:
         print(e)
@@ -35,6 +41,12 @@ def rec_test():
 #         return jsonify({'status':'ok'}), 200
 #     elif request.method == 'POST':
 #         return jsonify({'status':'ok'}), 200
+
+def record(id):
+    ir.Record(GPIO=REC_PIN, ID=id)
+
+def playback(id):
+    ir.Playback(GPIO=SEND_PIN, ID=id)
 
 def cleanup():
     ir.stop()
