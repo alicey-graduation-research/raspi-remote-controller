@@ -10,11 +10,11 @@ SEND_PIN = int(os.getenv('SEND_PIN'))
 REC_PIN = int(os.getenv('REC_PIN'))
 
 try:
-    subprocess.call("rm -rf /var/run/*")
+    subprocess.run("rm -rf /var/run/*")
     print('del /var/run/*')
 except FileNotFoundError:
     print('notfound /var/run/*')
-subprocess.call("pigpiod")
+subprocess.run("pigpiod")
 ir = IRRP(file="test", post=130, no_confirm=True)
 app = Flask("simple-iot-server")
 
