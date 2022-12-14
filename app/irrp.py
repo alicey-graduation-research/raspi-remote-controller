@@ -29,6 +29,8 @@ import os
 
 import pigpio  # http://abyz.co.uk/rpi/pigpio/python.html
 
+class NotFoundError(Exception):
+    pass
 
 class IRRP:
     def __init__(self,
@@ -483,6 +485,7 @@ class IRRP:
                 spaces_wid = {}
             else:
                 print("Id {} not found".format(arg))
+                raise NotFoundError
 
         self.pi.stop()  # Disconnect from Pi.
 

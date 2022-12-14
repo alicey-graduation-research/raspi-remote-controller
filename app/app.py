@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from dotenv import load_dotenv
-from irrp import IRRP
+from irrp import IRRP, NotFoundError
 import subprocess
 import sys
 import os
@@ -25,9 +25,10 @@ def top():
 @app.route("/api/send")
 def send_ir():
     try:
-        pl = playback(get_id(request.args))
-        print("log:", pl)
+        playback(get_id(request.args))
         return jsonify({'status':'done'}), 200
+    except NotFoundError as e:
+        return jsonify({'status':'notfound'}), 400
     except Exception as e:
         print(e)
         return jsonify({'status':'error'}), 500
