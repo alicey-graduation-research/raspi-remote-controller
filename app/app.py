@@ -9,7 +9,7 @@ app = Flask("simple-iot-server")
 def top():
     return jsonify({'status':'ok'}), 200
 
-@app.route("send-test/")
+@app.route("/send-test/")
 def send_test():
     try:
         ir.Playback(GPIO=23, ID="air:on")
@@ -17,7 +17,7 @@ def send_test():
     except:
         return jsonify({'status':'error'}), 500
 
-@app.route("rec-test/")
+@app.route("/rec-test/")
 def rec_test():
     try:
         ir.Record(GPIO=22, ID="air:on")
