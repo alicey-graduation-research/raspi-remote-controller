@@ -13,7 +13,7 @@ try:
     subprocess.call("rm -rf /var/run/*")
     print('del /var/run/*')
 except FileNotFoundError:
-    pass
+    print('notfound /var/run/*')
 subprocess.call("pigpiod")
 ir = IRRP(file="test", post=130, no_confirm=True)
 app = Flask("simple-iot-server")
