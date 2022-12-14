@@ -14,7 +14,8 @@ def send_test():
     try:
         ir.Playback(GPIO=23, ID="air:on")
         return jsonify({'status':'done'}), 200
-    except:
+    except Exception as e:
+        print(e)
         return jsonify({'status':'error'}), 500
 
 @app.route("/rec-test/")
@@ -22,7 +23,8 @@ def rec_test():
     try:
         ir.Record(GPIO=22, ID="air:on")
         return jsonify({'status':'done'}), 200
-    except:
+    except Exception as e:
+        print(e)
         return jsonify({'status':'error'}), 500
 
 # @app.route("/temp/", methods=["GET","POST"])
