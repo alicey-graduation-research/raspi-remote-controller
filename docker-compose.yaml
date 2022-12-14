@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  raspi-remote-control-server:
+    build: .
+    container_name: raspi-remote-control-server
+    volumes:
+        - "./app/:/opt/app"
+    ports:
+      - 32121:80

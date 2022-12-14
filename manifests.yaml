@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: raspi-remote-control-server
+spec:
+  #replicas: 1
+  selector:
+    matchLabels:
+      app: raspi-remote-control-server
+  template:
+    metadata:
+      labels:
+        app: raspi-remote-control-server
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: sensortype
+                operator: In
+                values:
+                - alicey-irda-sender
+      containers:
+        - name: raspi-remote-control-server
+          image: alicey/raspi-raspi-remote-control-server:latest
+          securityContext:
+            privileged: true
+          env:
+            - name: REC-PIN
+              value: "22"
+            - name: SEND-PIN
+              value: "23"
