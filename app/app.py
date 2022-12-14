@@ -17,6 +17,24 @@ app = Flask("simple-iot-server")
 def top():
     return jsonify({'status':'ok'}), 200
 
+@app.route("/api/send")
+def send_ir():
+    try:
+        playback(get_id(request.args))
+        return jsonify({'status':'done'}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({'status':'error'}), 500
+
+@app.route("/api/rec")
+def rec_ir():
+    try:
+        record(get_id(request.args))
+        return jsonify({'status':'done'}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({'status':'error'}), 500
+
 @app.route("/send-test/")
 def send_test():
     try:
@@ -41,6 +59,14 @@ def rec_test():
 #         return jsonify({'status':'ok'}), 200
 #     elif request.method == 'POST':
 #         return jsonify({'status':'ok'}), 200
+
+def get_params(req):
+    hw = str(req.get('hw'))
+    func = str(req.get('func'))
+    return hw, func
+
+def get_id(hw, func):
+    return f"{hw}:{func}"
 
 def record(id):
     ir.Record(GPIO=REC_PIN, ID=id)
