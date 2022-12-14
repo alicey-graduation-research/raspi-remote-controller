@@ -32,16 +32,16 @@ import pigpio  # http://abyz.co.uk/rpi/pigpio/python.html
 
 class IRRP:
     def __init__(self,
-                 file: str,
-                 freq: float = 38.0,
-                 gap: int = 100,
-                 glitch: int = 100,
-                 pre: int = 200,
-                 post: int = 15,
-                 short: int = 10,
-                 tolerance: int = 15,
-                 verbose: bool = False,
-                 no_confirm: bool = False):
+                file: str,
+                freq: float = 38.0,
+                gap: int = 100,
+                glitch: int = 100,
+                pre: int = 200,
+                post: int = 15,
+                short: int = 10,
+                tolerance: int = 15,
+                verbose: bool = False,
+                no_confirm: bool = False):
 
         self.GPIO = None
         self.FILE = file              #Filename
@@ -73,8 +73,8 @@ class IRRP:
 
     def _backup(self, f):
         """
-       f -> f.bak -> f.bak1 -> f.bak2
-       """
+    f -> f.bak -> f.bak1 -> f.bak2
+    """
         try:
             os.rename(
                 os.path.realpath(f) + ".bak1",
@@ -96,8 +96,8 @@ class IRRP:
 
     def _carrier(self, gpio, frequency, micros):
         """
-       Generate carrier square wave.
-       """
+    Generate carrier square wave.
+    """
         wf = []
         cycle = 1000.0 / frequency
         cycles = int(round(micros / cycle))
@@ -114,39 +114,39 @@ class IRRP:
 
     def _normalise(self, c):
         """
-       Typically a code will be made up of two or three distinct
-       marks (carrier) and spaces (no carrier) of different lengths.
+    Typically a code will be made up of two or three distinct
+    marks (carrier) and spaces (no carrier) of different lengths.
 
-       Because of transmission and reception errors those pulses
-       which should all be x micros long will have a variance around x.
+    Because of transmission and reception errors those pulses
+    which should all be x micros long will have a variance around x.
 
-       This function identifies the distinct pulses and takes the
-       average of the lengths making up each distinct pulse.  Marks
-       and spaces are processed separately.
+    This function identifies the distinct pulses and takes the
+    average of the lengths making up each distinct pulse.  Marks
+    and spaces are processed separately.
 
-       This makes the eventual generation of waves much more efficient.
+    This makes the eventual generation of waves much more efficient.
 
-       Input
+    Input
 
-         M    S   M   S   M   S   M    S   M    S   M
-       9000 4500 600 540 620 560 590 1660 620 1690 615
+        M    S   M   S   M   S   M    S   M    S   M
+    9000 4500 600 540 620 560 590 1660 620 1690 615
 
-       Distinct marks
+    Distinct marks
 
-       9000                average 9000
-       600 620 590 620 615 average  609
+    9000                average 9000
+    600 620 590 620 615 average  609
 
-       Distinct spaces
+    Distinct spaces
 
-       4500                average 4500
-       540 560             average  550
-       1660 1690           average 1675
+    4500                average 4500
+    540 560             average  550
+    1660 1690           average 1675
 
-       Output
+    Output
 
-         M    S   M   S   M   S   M    S   M    S   M
-       9000 4500 609 550 609 550 609 1675 609 1675 609
-       """
+        M    S   M   S   M   S   M    S   M    S   M
+    9000 4500 609 550 609 550 609 1675 609 1675 609
+    """
         if self.VERBOSE:
             print("before normalise", c)
         entries = len(c)
@@ -182,19 +182,19 @@ class IRRP:
 
     def _compare(self, p1, p2):
         """
-       Check that both recodings correspond in pulse length to within
-       TOLERANCE%.  If they do average the two recordings pulse lengths.
+    Check that both recodings correspond in pulse length to within
+    TOLERANCE%.  If they do average the two recordings pulse lengths.
 
-       Input
+    Input
 
             M    S   M   S   M   S   M    S   M    S   M
-       1: 9000 4500 600 560 600 560 600 1700 600 1700 600
-       2: 9020 4570 590 550 590 550 590 1640 590 1640 590
+    1: 9000 4500 600 560 600 560 600 1700 600 1700 600
+    2: 9020 4570 590 550 590 550 590 1640 590 1640 590
 
-       Output
+    Output
 
-       A: 9010 4535 595 555 595 555 595 1670 595 1670 595
-       """
+    A: 9010 4535 595 555 595 555 595 1670 595 1670 595
+    """
         if len(p1) != len(p2):
             return False
 
@@ -303,7 +303,7 @@ class IRRP:
                         not self.in_code):  # Start of a code.
                     self.in_code = True
                     self.pi.set_watchdog(self.GPIO,
-                                         self.POST_MS)  # Start watchdog.
+                                        self.POST_MS)  # Start watchdog.
 
                 elif (edge > self.POST_US) and self.in_code:  # End of a code.
                     self.in_code = False
