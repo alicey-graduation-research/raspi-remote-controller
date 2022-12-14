@@ -9,6 +9,7 @@ load_dotenv()
 SEND_PIN = int(os.getenv('SEND_PIN'))
 REC_PIN = int(os.getenv('REC_PIN'))
 
+subprocess.call("rm -rf /var/run/*")
 subprocess.call("pigpiod")
 ir = IRRP(file="test", post=130, no_confirm=True)
 app = Flask("simple-iot-server")
