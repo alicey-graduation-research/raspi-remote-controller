@@ -18,6 +18,7 @@ RUN /usr/local/bin/pigpiod
 
 #app 
 WORKDIR /opt/app
+ENV PYTHONUNBUFFERED 1
 
 ADD requirements.txt ./requirements.txt
 ADD app/ .
