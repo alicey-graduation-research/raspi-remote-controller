@@ -3,7 +3,7 @@ version: "3"
 services:
   raspi-remote-control-server:
     #build: .
-    image: alicey/raspi-raspi-remote-control-server:latest
+    image: alicey/raspi-remote-control-server:latest
     container_name: raspi-remote-control-server
     environment:
       - REC_PIN=22
